@@ -1,6 +1,9 @@
 package btree
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // NearestFunc[T] determines if newKey is nearer than tempNearest
 // if it is nearer, return true
@@ -32,5 +35,6 @@ func (t *BTreeG[T]) GetByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T
 	if t.root == nil {
 		return
 	}
+	t.root.print(os.Stdout, 0)
 	return t.root.getByFuncNearest(key, nearest, nearestFunc)
 }
