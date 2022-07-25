@@ -17,7 +17,7 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 		return n.items[i], true
 	} else if len(n.children) > 0 && len(n.children) > i {
 
-		fmt.Printf("%v %v %v", n.items[i], i, len(n.children))
+		fmt.Printf("%v %v %v %v\n", n.items[i], i, len(n.children), len(n.items))
 		if nearestFunc(key, n.items[i], nearest) {
 			return n.children[i].getByFuncNearest(key, n.items[i], nearestFunc)
 		}
