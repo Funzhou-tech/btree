@@ -11,19 +11,34 @@ type NearestFunc[T any] func(goal, newKey, tempNearest T) bool
 
 // get finds the given key in the subtree and returns it.
 func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T]) (_ T, _ bool) {
-	i, found := n.items.find(key, n.cow.less)
-	if found {
-		nearest = n.items[i]
-		return n.items[i], true
-	} else if len(n.children) > 0 && len(n.children) > i {
 
-		fmt.Printf("%v %v %v %v\n", n.items[i], i, len(n.children), len(n.items))
-		if nearestFunc(key, n.items[i], nearest) {
-			return n.children[i].getByFuncNearest(key, n.items[i], nearestFunc)
+	var nearestInItems int
+	for i, item := range n.items {
+		if !n.cow.less(item, key) {
+			nearestInItems = i
+			break
+		}
+	}
+
+	if !n.cow.less(key, n.items[nearestInItems]) {
+		return n.items[nearestInItems], true
+	}
+
+	// i, found := n.items.find(key, n.cow.less)
+	// if found {
+	// 	nearest = n.items[i]
+	// 	return n.items[i], true
+	// } else
+
+	if len(n.children) > 0 {
+
+		fmt.Printf("%v %v %v %v\n", n.items[nearestInItems-1], nearestInItems, len(n.children), len(n.items))
+		if nearestFunc(key, n.items[nearestInItems-1], nearest) {
+			return n.children[nearestInItems].getByFuncNearest(key, n.items[nearestInItems-1], nearestFunc)
 		}
 
 		// if temp node is not nearer, it's child nodes wouldn't be nearer anymore
-		return n.children[i].getByFuncNearest(key, nearest, nearestFunc)
+		return n.children[nearestInItems-1].getByFuncNearest(key, nearest, nearestFunc)
 	}
 
 	return nearest, false
