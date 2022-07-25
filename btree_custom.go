@@ -24,6 +24,8 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 		return n.items[nearestInItems], true
 	}
 
+	fmt.Printf("nearest one is [%v] %v %v %v\n", nearestInItems, n.items[nearestInItems])
+
 	// i, found := n.items.find(key, n.cow.less)
 	// if found {
 	// 	nearest = n.items[i]
