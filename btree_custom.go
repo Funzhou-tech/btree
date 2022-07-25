@@ -10,7 +10,8 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 	if found {
 		nearest = n.items[i]
 		return n.items[i], true
-	} else if len(n.children) > 0 {
+	} else if len(n.children) > 0 && len(n.children) > i {
+
 		if nearestFunc(key, n.items[i], nearest) {
 			return n.children[i].getByFuncNearest(key, n.items[i], nearestFunc)
 		}
