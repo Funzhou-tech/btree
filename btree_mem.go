@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//go:build ignore
 // +build ignore
 
 // This binary compares memory usage between btree and gollrb.
@@ -24,7 +25,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/google/btree"
+	"github.com/Funzhou-tech/btree"
 	"github.com/petar/GoLLRB/llrb"
 )
 
