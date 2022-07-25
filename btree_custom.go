@@ -1,5 +1,7 @@
 package btree
 
+import "fmt"
+
 // NearestFunc[T] determines if newKey is nearer than tempNearest
 // if it is nearer, return true
 type NearestFunc[T any] func(goal, newKey, tempNearest T) bool
@@ -12,6 +14,7 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 		return n.items[i], true
 	} else if len(n.children) > 0 && len(n.children) > i {
 
+		fmt.Printf("%v %v %v", n.items[i], i, len(n.children))
 		if nearestFunc(key, n.items[i], nearest) {
 			return n.children[i].getByFuncNearest(key, n.items[i], nearestFunc)
 		}
