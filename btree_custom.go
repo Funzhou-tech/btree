@@ -34,13 +34,13 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 
 	if len(n.children) > 0 {
 
-		fmt.Printf("%v %v %v %v\n", n.items[nearestInItems-1], nearestInItems, len(n.children), len(n.items))
-		if nearestFunc(key, n.items[nearestInItems-1], nearest) {
-			return n.children[nearestInItems].getByFuncNearest(key, n.items[nearestInItems-1], nearestFunc)
+		fmt.Printf("%v %v %v %v\n", n.items[nearestInItems], nearestInItems, len(n.children), len(n.items))
+		if nearestFunc(key, n.items[nearestInItems], nearest) {
+			return n.children[nearestInItems+1].getByFuncNearest(key, n.items[nearestInItems], nearestFunc)
 		}
 
 		// if temp node is not nearer, it's child nodes wouldn't be nearer anymore
-		return n.children[nearestInItems-1].getByFuncNearest(key, nearest, nearestFunc)
+		return n.children[nearestInItems].getByFuncNearest(key, nearest, nearestFunc)
 	}
 
 	return nearest, false
