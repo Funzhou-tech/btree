@@ -16,7 +16,7 @@ func (n *node[T]) getByFuncNearest(key T, nearest T, nearestFunc NearestFunc[T])
 		}
 
 		// if temp node is not nearer, it's child nodes wouldn't be nearer anymore
-		// return n.children[i].getByFuncNearest(key, nearest, nearestFunc)
+		return n.children[i].getByFuncNearest(key, nearest, nearestFunc)
 	}
 
 	return nearest, false
